@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informational Website</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5b7b1 0%, #ec7063 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .top-nav {
+            background: rgba(252, 238, 233, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(236, 112, 99, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo {
+            color: #e74c3c;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links li {
+            margin: 0;
+        }
+
+        .nav-links a {
+            color: #c0392b;
+            text-decoration: none;
+            padding: 20px 0;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #e74c3c;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 15px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #fceeE9, #fceeE9);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: #c0392b;
+            font-size: 1.5em;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            margin-top: 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #fadbd8 0%, #f1948a 100%);
+            color: #c0392b;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .tabs {
+            display: flex;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e9ecef;
+            border-radius: 15px 15px 0 0;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            background: none;
+            font-size: 1.1em;
+            font-weight: 500;
+            color: #6c757d;
+            position: relative;
+        }
+
+        .tab:hover {
+            background: rgba(108, 117, 125, 0.1);
+            color: #495057;
+        }
+
+        .tab.active {
+            background: white;
+            color: #c0392b;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #fceeE9, #fceeE9);
+        }
+
+        .content {
+            padding: 40px;
+            min-height: 500px;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .text-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .text-content h2 {
+            color: #c0392b;
+            margin-bottom: 20px;
+            font-size: 2em;
+            font-weight: 700;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .text-content p {
+            line-height: 1.6;
+            margin-bottom: 20px;
+            color: #495057;
+            font-size: 1.1em;
+        }
+
+        .text-content ul {
+            margin: 20px 0;
+            padding-left: 20px;
+        }
+
+        .text-content li {
+            margin-bottom: 10px;
+            color: #495057;
+        }
+
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .image-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .image-card.clickable-location {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .image-card.clickable-location:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+            border: 2px solid #e74c3c;
+        }
+
+        .image-card.clickable-location:active {
+            transform: translateY(-3px);
+        }
+
+        .image-placeholder {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #fadbd8 0%, #f5b7b1 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #c0392b;
+            font-size: 1.2em;
+            font-weight: 500;
+        }
+
+        .image-caption {
+            padding: 20px;
+        }
+
+        .image-caption h3 {
+            color: #c0392b;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+        }
+
+        .image-caption p {
+            color: #6c757d;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(252, 238, 233, 0.98);
+                flex-direction: column;
+                gap: 0;
+                padding: 20px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links a {
+                padding: 15px 0;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            .nav-links a:last-child {
+                border-bottom: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .nav-container {
+                position: relative;
+            }
+            
+            .tabs {
+                flex-direction: column;
+            }
+            
+            .tab {
+                border-bottom: 1px solid #e9ecef;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .image-gallery {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="top-nav">
+        <div class="nav-container">
+            <a href="#" class="logo">SweetsBerry</a>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#portfolio">Portfolio</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="header">
+            <h1>SweetsBerry Bakery</h1>
+            <p>Various sweets, pastries, and treats perfect for every occasion!</p>
+        </div>
+
+        <div class="tabs">
+            <button class="tab active" onclick="showTab('text')">About Us</button>
+            <button class="tab" onclick="showTab('images1')">Specialty Menu Items</button>
+            <button class="tab" onclick="showTab('images2')">Locations</button>
+        </div>
+
+        <div class="content">
+            <!-- Text Content Tab -->
+            <div id="text" class="tab-content active">
+                <div class="text-content">
+                    <h2>About Our Bakery</h2>
+                    <p>Founded in 2025, we are a startup from Columbia, MO in the USA. Originally, each recipe came from family and family friends and have spread to the local shop! In the future, improvements to:</p>
+                    <ul>
+                        <li>Seasonal and specialty menu items</li>
+                        <li>Recipe books and design patterns</li>
+                        <li>More about the recipe creators</li>
+                        <li>Interior decoration and rennovation</li>
+                        <li>Platform on social medias and advertisement</li>
+                    </ul>
+                    <p>Will be made. Keep a look out for future plans, show support through social media! Ask for allergy concerns, although a list of allergens will be listed online as well.</p>
+                    <p>Lastly, enjoy your stay at SweetsBerry and report any feedback through the Contact tab!</p>
+                </div>
+            </div>
+
+            <!-- Specialty Menu Items Tab -->
+            <div id="images1" class="tab-content">
+                <div class="image-gallery">
+                    <div class="image-card">
+                        <div class="image-placeholder">🧁 Cupcakes</div>
+                        <div class="image-caption">
+                            <h3>Signature Cupcakes</h3>
+                            <p>Our famous cupcakes with buttercream frosting, available in vanilla, chocolate, and seasonal flavors. Made fresh daily with family recipes.</p>
+                        </div>
+                    </div>
+                    <div class="image-card">
+                        <div class="image-placeholder">🍰 Layer Cakes</div>
+                        <div class="image-caption">
+                            <h3>Custom Layer Cakes</h3>
+                            <p>Beautiful multi-layer cakes perfect for birthdays, weddings, and special occasions. Custom designs and flavors available.</p>
+                        </div>
+                    </div>
+                    <div class="image-card">
+                        <div class="image-placeholder">🥐 Pastries</div>
+                        <div class="image-caption">
+                            <h3>Fresh Pastries</h3>
+                            <p>Daily selection of croissants, danishes, and other flaky pastries. Perfect with your morning coffee or afternoon tea.</p>
+                        </div>
+                    </div>
+                    <div class="image-card">
+                        <div class="image-placeholder">🍪 Cookies</div>
+                        <div class="image-caption">
+                            <h3>Artisan Cookies</h3>
+                            <p>Handcrafted cookies in various flavors including chocolate chip, oatmeal raisin, and seasonal specialties.</p>
+                        </div>
+                    </div>
+                    <div class="image-card">
+                        <div class="image-placeholder">🥧 Pies</div>
+                        <div class="image-caption">
+                            <h3>Homemade Pies</h3>
+                            <p>Traditional pies with flaky crusts and fresh fillings. Apple, pumpkin, pecan, and seasonal fruit varieties available.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Locations Tab -->
+            <div id="images2" class="tab-content">
+                <div class="image-gallery">
+                    <div class="image-card clickable-location" onclick="openLocation('Columbia, MO')">
+                        <div class="image-placeholder">📍 Main Location</div>
+                        <div class="image-caption">
+                            <h3>Columbia, MO Flagship Store</h3>
+                            <p>Our original location in the heart of Columbia, featuring our full menu and cozy seating area. Open daily 7am-7pm.</p>
+                            <p style="color: #e74c3c; font-weight: 500; margin-top: 10px;">📍 Click to view on Google Maps</p>
+                        </div>
+                    </div>
+                    <div class="image-card clickable-location" onclick="openLocation('Columbia, MO farmers market')">
+                        <div class="image-placeholder">🚐 Mobile Bakery</div>
+                        <div class="image-caption">
+                            <h3>Food Truck Service</h3>
+                            <p>Find our mobile bakery at local events, farmers markets, and festivals throughout central Missouri.</p>
+                            <p style="color: #e74c3c; font-weight: 500; margin-top: 10px;">📍 Click to view typical locations</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleMobileMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.classList.toggle('active');
+        }
+
+        function showTab(tabName) {
+            // Hide all tab contents
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+            
+            // Remove active class from all tabs
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Show selected tab content
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+        }
+
+        function openLocation(locationQuery) {
+            // Create Google Maps URL with the location query
+            const mapsUrl = `https://www.google.com/maps/search/${encodeURIComponent(locationQuery)}`;
+            
+            // Open in a new tab
+            window.open(mapsUrl, '_blank');
+        }
+    </script>
+</body>
+</html>

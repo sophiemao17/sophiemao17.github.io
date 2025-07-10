@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informational Website</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5b7b1 0%, #ec7063 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .top-nav {
+            background: rgba(252, 238, 233, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(236, 112, 99, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo {
+            color: #e74c3c;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links li {
+            margin: 0;
+        }
+
+        .nav-links a {
+            color: #c0392b;
+            text-decoration: none;
+            padding: 20px 0;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #e74c3c;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 15px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #fceeE9, #fceeE9);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: #c0392b;
+            font-size: 1.5em;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            margin-top: 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #fadbd8 0%, #f1948a 100%);
+            color: #c0392b;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .tabs {
+            display: flex;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e9ecef;
+            border-radius: 15px 15px 0 0;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            background: none;
+            font-size: 1.1em;
+            font-weight: 500;
+            color: #6c757d;
+            position: relative;
+        }
+
+        .tab:hover {
+            background: rgba(108, 117, 125, 0.1);
+            color: #495057;
+        }
+
+        .tab.active {
+            background: white;
+            color: #c0392b;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #fceeE9, #fceeE9);
+        }
+
+        .content {
+            padding: 40px;
+            min-height: 500px;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .text-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .text-content h2 {
+            color: #c0392b;
+            margin-bottom: 20px;
+            font-size: 2em;
+            font-weight: 700;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .text-content p {
+            line-height: 1.6;
+            margin-bottom: 20px;
+            color: #495057;
+            font-size: 1.1em;
+        }
+
+        .text-content ul {
+            margin: 20px 0;
+            padding-left: 20px;
+        }
+
+        .text-content li {
+            margin-bottom: 10px;
+            color: #495057;
+        }
+
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .image-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .image-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .image-placeholder {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #fadbd8 0%, #f5b7b1 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #c0392b;
+            font-size: 1.2em;
+            font-weight: 500;
+        }
+
+        .image-caption {
+            padding: 20px;
+        }
+
+        .image-caption h3 {
+            color: #c0392b;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+        }
+
+        .image-caption p {
+            color: #6c757d;
+            line-height: 1.5;
+        }
+
+        .upload-controls {
+            margin-bottom: 20px;
+        }
+
+        .toggle-upload-btn {
+            background: linear-gradient(135deg, #c0392b 0%, #e74c3c 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+            margin-bottom: 15px;
+        }
+
+        .toggle-upload-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(192, 57, 43, 0.3);
+        }
+
+        .upload-area {
+            border: 2px dashed #dee2e6;
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .upload-area:hover {
+            border-color: #fceeE9;
+            background: rgba(252, 238, 233, 0.05);
+        }
+
+        .upload-area.dragover {
+            border-color: #fceeE9;
+            background: rgba(252, 238, 233, 0.1);
+        }
+
+        .upload-btn {
+            background: linear-gradient(135deg, #fceeE9 0%, #fceeE9 100%);
+            color: #c0392b;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .upload-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(252, 238, 233, 0.3);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(252, 238, 233, 0.98);
+                flex-direction: column;
+                gap: 0;
+                padding: 20px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links a {
+                padding: 15px 0;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            .nav-links a:last-child {
+                border-bottom: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .nav-container {
+                position: relative;
+            }
+            
+            .tabs {
+                flex-direction: column;
+            }
+            
+            .tab {
+                border-bottom: 1px solid #e9ecef;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .image-gallery {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="top-nav">
+        <div class="nav-container">
+            <a href="#" class="logo">SweetsBerry</a>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#portfolio">Portfolio</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="header">
+            <h1>SweetsBerry Bakery</h1>
+            <p>Various sweets, pastries, and treats perfect for every occasion!</p>
+        </div>
+
+        <div class="tabs">
+            <button class="tab active" onclick="showTab('text')">About Us</button>
+            <button class="tab" onclick="showTab('images1')">Specialty Menu Items</button>
+            <button class="tab" onclick="showTab('images2')">Locations</button>
+        </div>
+
+        <div class="content">
+            <!-- Text Content Tab -->
+            <div id="text" class="tab-content active">
+                <div class="text-content">
+                    <h2>About Our Bakery</h2>
+                    <p>Founded in 2025, we are a startup from Columbia, MO in the USA. Originally, each recipe came from family and family friends and have spread to the local shop! In the future, improvements to:</p>
+                    <ul>
+                        <li>Seasonal and specialty menu items</li>
+                        <li>Recipe books and design patterns</li>
+                        <li>More about the recipe creators</li>
+                        <li>Interior decoration and rennovation</li>
+                        <li>Platform on social medias and advertisement</li>
+                    </ul>
+                    <p>Will be made. Keep a look out for future plans, show support through social media! Ask for allergy concerns, although a list of allergens will be listed online as well.</p>
+                    <p>Lastly, enjoy your stay at SweetsBerry and report any feedback through the Contact tab!</p>
+                </div>
+            </div>
+
+            <!-- Image Gallery 1 Tab -->
+            <div id="images1" class="tab-content">
+                <div class="upload-controls">
+                    <button class="toggle-upload-btn" onclick="toggleUploadArea('upload1')">Toggle Upload Area</button>
+                    <div id="upload1" class="upload-area" onclick="document.getElementById('fileInput1').click()">
+                        <div>📸 Click to upload images or drag and drop</div>
+                        <button class="upload-btn">Choose Images</button>
+                        <input type="file" id="fileInput1" class="hidden" multiple accept="image/*" onchange="handleImages(this, 'gallery1')">
+                    </div>
+                </div>
+                <div id="gallery1" class="image-gallery">
+                    <div class="image-card">
+                        <div class="image-placeholder">Sample Image 1</div>
+                        <div class="image-caption">
+                            <h3>Your First Image</h3>
+                            <p>Add your images here with custom captions. This gallery is perfect for showcasing products, portfolios, or any visual content.</p>
+                        </div>
+                    </div>
+                    <div class="image-card">
+                        <div class="image-placeholder">Sample Image 2</div>
+                        <div class="image-caption">
+                            <h3>Another Great Shot</h3>
+                            <p>Each image can have its own descriptive caption to provide context and additional information to your viewers.</p>
+                        </div>
+                    </div>
+                    <div class="image-card">
+                        <div class="image-placeholder">Sample Image 3</div>
+                        <div class="image-caption">
+                            <h3>Third Featured Image</h3>
+                            <p>This third image space allows you to showcase even more content with detailed descriptions and captions.</p>
+                        </div>
+                    </div>
+                    <div class="image-card">
+                        <div class="image-placeholder">Sample Image 4</div>
+                        <div class="image-caption">
+                            <h3>Fourth Visual Element</h3>
+                            <p>Perfect for creating comprehensive galleries that tell a complete story through images and text.</p>
+                        </div>
+                    </div>
+                    <div class="image-card">
+                        <div class="image-placeholder">Sample Image 5</div>
+                        <div class="image-caption">
+                            <h3>Fifth Gallery Item</h3>
+                            <p>The responsive grid layout automatically adjusts to accommodate all your images beautifully across different screen sizes.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Image Gallery 2 Tab -->
+            <div id="images2" class="tab-content">
+                <div class="upload-controls">
+                    <button class="toggle-upload-btn" onclick="toggleUploadArea('upload2')">Toggle Upload Area</button>
+                    <div id="upload2" class="upload-area" onclick="document.getElementById('fileInput2').click()">
+                        <div>📷 Click to upload images or drag and drop</div>
+                        <button class="upload-btn">Choose Images</button>
+                        <input type="file" id="fileInput2" class="hidden" multiple accept="image/*" onchange="handleImages(this, 'gallery2')">
+                    </div>
+                </div>
+                <div id="gallery2" class="image-gallery">
+                    <div class="image-card">
+                        <div class="image-placeholder">Sample Image A</div>
+                        <div class="image-caption">
+                            <h3>Second Gallery</h3>
+                            <p>This second image gallery allows you to organize content into different categories or themes.</p>
+                        </div>
+                    </div>
+                    <div class="image-card">
+                        <div class="image-placeholder">Sample Image B</div>
+                        <div class="image-caption">
+                            <h3>Flexible Layout</h3>
+                            <p>The responsive grid layout automatically adjusts to fit your content beautifully on any screen size.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleMobileMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.classList.toggle('active');
+        }
+
+        function toggleUploadArea(uploadId) {
+            const uploadArea = document.getElementById(uploadId);
+            const isHidden = uploadArea.style.display === 'none';
+            uploadArea.style.display = isHidden ? 'block' : 'none';
+        }
+
+        function showTab(tabName) {
+            // Hide all tab contents
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+            
+            // Remove active class from all tabs
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Show selected tab content
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+        }
+
+        function handleImages(input, galleryId) {
+            const gallery = document.getElementById(galleryId);
+            const files = input.files;
+            
+            // Clear existing sample images on first upload
+            if (files.length > 0) {
+                const sampleImages = gallery.querySelectorAll('.image-card');
+                sampleImages.forEach(card => {
+                    if (card.querySelector('.image-placeholder')) {
+                        card.remove();
+                    }
+                });
+            }
+            
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    const imageCard = document.createElement('div');
+                    imageCard.className = 'image-card';
+                    imageCard.innerHTML = `
+                        <img src="${e.target.result}" alt="Uploaded image" style="width: 100%; height: 200px; object-fit: cover;">
+                        <div class="image-caption">
+                            <h3 contenteditable="true" style="outline: none; cursor: text;">${file.name}</h3>
+                            <p contenteditable="true" style="outline: none; cursor: text;">Click to edit this caption and add your own description.</p>
+                        </div>
+                    `;
+                    gallery.appendChild(imageCard);
+                };
+                
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Drag and drop functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const uploadAreas = document.querySelectorAll('.upload-area');
+            
+            uploadAreas.forEach(area => {
+                area.addEventListener('dragover', function(e) {
+                    e.preventDefault();
+                    this.classList.add('dragover');
+                });
+                
+                area.addEventListener('dragleave', function(e) {
+                    e.preventDefault();
+                    this.classList.remove('dragover');
+                });
+                
+                area.addEventListener('drop', function(e) {
+                    e.preventDefault();
+                    this.classList.remove('dragover');
+                    
+                    const files = e.dataTransfer.files;
+                    const galleryId = this.querySelector('input[type="file"]').id === 'fileInput1' ? 'gallery1' : 'gallery2';
+                    
+                    // Simulate file input change
+                    const input = this.querySelector('input[type="file"]');
+                    input.files = files;
+                    handleImages(input, galleryId);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
